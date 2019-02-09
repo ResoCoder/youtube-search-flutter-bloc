@@ -1,0 +1,78 @@
+{
+    "kind": "youtube#searchListResponse",
+    "etag": "\"XI7nbFXulYBIpL0ayR_gDh3eu1k/YXy5UBwmb9ipkBM08V9FpIR5K_g\"",
+    "nextPageToken": "CAUQAA",
+    "regionCode": "SK",
+    "pageInfo": {
+     "totalResults": 129,
+     "resultsPerPage": 2
+    },
+    "items": [
+     {
+      "kind": "youtube#searchResult",
+      "etag": "\"XI7nbFXulYBIpL0ayR_gDh3eu1k/f9kqXrLcDgjN8OuA0hb2t8DxXYQ\"",
+      "id": {
+       "kind": "youtube#video",
+       "videoId": "yDaaM3u389I"
+      },
+      "snippet": {
+       "publishedAt": "2018-10-21T19:09:25.000Z",
+       "channelId": "UCSIvrn68cUk8CS8MbtBmBkA",
+       "title": "Android Kotlin: Forecast App 01 - Navigation & App Foundation - MVVM Tutorial Course",
+       "description": "Get the code from this tutorial https://resocoder.com/forecast-app-01 Start saving time now by planning weekly with Week Sweep: http://bit.ly/2Jf3QA0 With ...",
+       "thumbnails": {
+        "default": {
+         "url": "https://i.ytimg.com/vi/yDaaM3u389I/default.jpg",
+         "width": 120,
+         "height": 90
+        },
+        "medium": {
+         "url": "https://i.ytimg.com/vi/yDaaM3u389I/mqdefault.jpg",
+         "width": 320,
+         "height": 180
+        },
+        "high": {
+         "url": "https://i.ytimg.com/vi/yDaaM3u389I/hqdefault.jpg",
+         "width": 480,
+         "height": 360
+        }
+       },
+       "channelTitle": "Reso Coder",
+       "liveBroadcastContent": "none"
+      }
+     },
+     {
+      "kind": "youtube#searchResult",
+      "etag": "\"XI7nbFXulYBIpL0ayR_gDh3eu1k/O457K662NRDdyds4VEqQEFPW5Ds\"",
+      "id": {
+       "kind": "youtube#video",
+       "videoId": "RSYTn-O3r34"
+      },
+      "snippet": {
+       "publishedAt": "2018-10-27T17:00:03.000Z",
+       "channelId": "UCSIvrn68cUk8CS8MbtBmBkA",
+       "title": "Android Kotlin: Forecast App 02 - Retrofit + Coroutines + Gson Fetch API Data - MVVM Tutorial Course",
+       "description": "Get the code from this tutorial https://resocoder.com/forecast-app-02 Start saving time now by planning weekly with Week Sweep: http://bit.ly/2Jf3QA0 Apixu ...",
+       "thumbnails": {
+        "default": {
+         "url": "https://i.ytimg.com/vi/RSYTn-O3r34/default.jpg",
+         "width": 120,
+         "height": 90
+        },
+        "medium": {
+         "url": "https://i.ytimg.com/vi/RSYTn-O3r34/mqdefault.jpg",
+         "width": 320,
+         "height": 180
+        },
+        "high": {
+         "url": "https://i.ytimg.com/vi/RSYTn-O3r34/hqdefault.jpg",
+         "width": 480,
+         "height": 360
+        }
+       },
+       "channelTitle": "Reso Coder",
+       "liveBroadcastContent": "none"
+      }
+     }
+    ]
+   }
