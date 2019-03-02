@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
+import 'package:youtube_search_tutorial/data/model/search/model_search.dart';
+import 'package:youtube_search_tutorial/ui/search/search.dart';
 import 'package:youtube_search_tutorial/ui/search/search_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:youtube_search_tutorial/ui/search/widget/centered_message.dart';
+import 'package:youtube_search_tutorial/ui/search/widget/search_bar.dart';
 
 class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
@@ -9,6 +13,8 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _searchBloc = kiwi.Container().resolve<SearchBloc>();
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,69 +34,102 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         title: SearchBar(),
       ),
+      body: BlocBuilder(
+        bloc: _searchBloc,
+        builder: (context, SearchState state) {
+          if (state.isInitial) {
+            return CenteredMessage(
+              message: 'Start searching!',
+              icon: Icons.ondemand_video,
+            );
+          }
+
+          if (state.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (state.isSuccessful) {
+            return _buildResultList(state);
+          } else {
+            return CenteredMessage(
+              message: state.error,
+              icon: Icons.error_outline,
+            );
+          }
+        },
+      ),
     );
   }
-}
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
+  Widget _buildResultList(SearchState state) {
+    return NotificationListener<ScrollNotification>(
+      onNotification: _handleScrollNotification,
+      child: ListView.builder(
+        itemCount: _calculateListItemCount(state),
+        controller: _scrollController,
+        itemBuilder: (context, index) {
+          return index >= state.searchResults.length
+              ? _buildLoaderListItem()
+              : _buildVideoListItemCard(state.searchResults[index].snippet);
+        },
       ),
+    );
+  }
+
+  int _calculateListItemCount(SearchState state) {
+    if (state.hasReachedEndOfResults) {
+      return state.searchResults.length;
+    } else {
+      return state.searchResults.length + 1;
+    }
+  }
+
+  bool _handleScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification &&
+        _scrollController.position.extentAfter == 0) {
+      _searchBloc.fetchNextResultPage();
+    }
+    return false;
+  }
+
+  Widget _buildVideoListItemCard(SearchSnippet videoSnippet) {
+    return Card(
       child: Padding(
-        padding: const EdgeInsets.only(left: 5),
-        child: SearchField(),
-      ),
-    );
-  }
-}
-
-class SearchField extends StatefulWidget {
-  const SearchField({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  _SearchFieldState createState() => _SearchFieldState();
-}
-
-class _SearchFieldState extends State<SearchField> {
-  final _controller = TextEditingController();
-  final _focusNode = FocusNode();
-
-  void initState() {
-    super.initState();
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        _controller.selection =
-            TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        hintText: 'Search videos',
-        border: InputBorder.none,
-        icon: Icon(
-          Icons.search,
-          color: Colors.black.withOpacity(0.5),
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                videoSnippet.thumbnails.high.url,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              videoSnippet.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              videoSnippet.description,
+            ),
+          ],
         ),
       ),
-      onSubmitted: (searchQuery) {
-        BlocProvider.of<SearchBloc>(context).onSearchInitiated(searchQuery);
-      },
-      controller: _controller,
-      focusNode: _focusNode,
+    );
+  }
+
+  Widget _buildLoaderListItem() {
+    return Center(
+      child: CircularProgressIndicator(),
     );
   }
 }
