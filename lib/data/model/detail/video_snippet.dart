@@ -1,4 +1,4 @@
-library search_snippet;
+library video_snippet;
 
 import 'dart:convert';
 
@@ -8,30 +8,31 @@ import 'package:built_value/serializer.dart';
 import 'package:youtube_search_tutorial/data/model/common/model_common.dart';
 import 'package:youtube_search_tutorial/data/model/serializer/serializers.dart';
 
-part 'search_snippet.g.dart';
+part 'video_snippet.g.dart';
 
-abstract class SearchSnippet
-    implements Built<SearchSnippet, SearchSnippetBuilder> {
+abstract class VideoSnippet
+    implements Built<VideoSnippet, VideoSnippetBuilder> {
   String get publishedAt;
   String get channelId;
   String get title;
   String get description;
   Thumbnails get thumbnails;
   String get channelTitle;
+  BuiltList<String> get tags;
 
-  SearchSnippet._();
+  VideoSnippet._();
 
-  factory SearchSnippet([updates(SearchSnippetBuilder b)]) = _$SearchSnippet;
+  factory VideoSnippet([updates(VideoSnippetBuilder b)]) = _$VideoSnippet;
 
   String toJson() {
     return json
-        .encode(serializers.serializeWith(SearchSnippet.serializer, this));
+        .encode(serializers.serializeWith(VideoSnippet.serializer, this));
   }
 
-  static SearchSnippet fromJson(String jsonString) {
+  static VideoSnippet fromJson(String jsonString) {
     return serializers.deserializeWith(
-        SearchSnippet.serializer, json.decode(jsonString));
+        VideoSnippet.serializer, json.decode(jsonString));
   }
 
-  static Serializer<SearchSnippet> get serializer => _$searchSnippetSerializer;
+  static Serializer<VideoSnippet> get serializer => _$videoSnippetSerializer;
 }
