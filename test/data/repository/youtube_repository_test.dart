@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
+import 'package:youtube_search_tutorial/data/model/detail/model_detail.dart';
 import 'package:youtube_search_tutorial/data/network/youtube_data_source.dart';
 import 'package:youtube_search_tutorial/data/model/search/model_search.dart';
 import 'package:youtube_search_tutorial/data/repository/youtube_repository.dart';
@@ -136,6 +137,45 @@ void main() {
           ));
         },
       );
+    });
+  });
+
+  group('Detail', () {
+    YoutubeVideoResponse videoResponse;
+    YoutubeVideoResponse emptyVideoResponse;
+
+    setUp(() {
+      videoResponse = YoutubeVideoResponse.fromJson(fixture('video_response'));
+      emptyVideoResponse =
+          YoutubeVideoResponse.fromJson(fixture('video_response_empty'));
+    });
+
+    group('fetchVideoInfo', () {
+      test('returns a VideoItem', () async {
+        when(
+          mockDataSource.fetchVideoInfo(id: anyNamed('id')),
+        ).thenAnswer(
+          (_) async => videoResponse,
+        );
+
+        final videoItem = await repository.fetchVideoInfo(id: 'abcd');
+
+        expect(videoItem, videoResponse.items[0]);
+
+        verify(mockDataSource.fetchVideoInfo(id: 'abcd')).called(1);
+      });
+
+      test('throws a NoSuchVideoException when called with a non-existent ID',
+          () async {
+        when(
+          mockDataSource.fetchVideoInfo(id: anyNamed('id')),
+        ).thenAnswer((_) async => emptyVideoResponse);
+
+        expect(
+          () => repository.fetchVideoInfo(id: 'abcd'),
+          throwsA(TypeMatcher<NoSuchVideoException>()),
+        );
+      });
     });
   });
 }

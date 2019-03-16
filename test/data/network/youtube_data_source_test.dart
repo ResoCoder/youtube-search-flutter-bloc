@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:matcher/matcher.dart';
+import 'package:youtube_search_tutorial/data/model/detail/model_detail.dart';
 import 'package:youtube_search_tutorial/data/model/search/model_search.dart';
 import 'package:youtube_search_tutorial/data/network/api_key.dart';
 import 'package:youtube_search_tutorial/data/network/youtube_data_source.dart';
@@ -116,6 +117,97 @@ void main() {
             contains('q=cute%20cat'),
           ),
         )),
+      ]);
+    });
+  });
+
+  group('fetchVideo', () {
+    test(
+      'returns YoutubeVideoResponse when the call completes successfully',
+      () async {
+        when(
+          mockClient.get(
+            startsWith('https://www.googleapis.com/youtube/v3/videos'),
+          ),
+        ).thenAnswer(
+          (_) async => http.Response(
+                fixture('video_response'),
+                200,
+                headers: {'content-type': 'application/json; charset=UTF-8'},
+              ),
+        );
+
+        YoutubeVideoResponse response =
+            await dataSource.fetchVideoInfo(id: 'L_bxFljD6AI');
+
+        expect(response, TypeMatcher<YoutubeVideoResponse>());
+        expect(response.items.length, 1);
+        expect(response.items[0].id, 'L_bxFljD6AI');
+
+        verify(mockClient.get(
+          argThat(
+            allOf(
+              startsWith('https://www.googleapis.com/youtube/v3/videos'),
+              contains('id=L_bxFljD6AI'),
+              contains('key=$API_KEY'),
+            ),
+          ),
+        ));
+      },
+    );
+
+    test('throws a YoutubeVideoError on a bad request', () {
+      when(
+        mockClient.get(
+          argThat(
+            startsWith('https://www.googleapis.com/youtube/v3/videos'),
+          ),
+        ),
+      ).thenAnswer(
+        (_) async => http.Response(fixture('error'), 400),
+      );
+
+      expect(
+        () => dataSource.fetchVideoInfo(id: 'abcd'),
+        throwsA(TypeMatcher<YoutubeVideoError>()),
+      );
+    });
+
+    test('makes HTTP requests to proper URLs', () {
+      when(
+        mockClient.get(
+          startsWith('https://www.googleapis.com/youtube/v3/videos'),
+        ),
+      ).thenAnswer(
+        (_) async => http.Response(
+              fixture('video_response'),
+              200,
+              headers: {'content-type': 'application/json; charset=UTF-8'},
+            ),
+      );
+
+      dataSource.fetchVideoInfo(id: 'abcd');
+      dataSource.fetchVideoInfo(id: 'efgh');
+
+      verifyInOrder([
+        mockClient.get(
+          argThat(
+            allOf(
+              startsWith('https://www.googleapis.com/youtube/v3/videos'),
+              contains('id=abcd'),
+              contains('key=$API_KEY'),
+            ),
+          ),
+        ),
+        mockClient.get(
+          argThat(
+            allOf(
+              startsWith('https://www.googleapis.com/youtube/v3/videos'),
+              contains('id=efgh'),
+              contains('key=$API_KEY'),
+            ),
+          ),
+        ),
       ]);
     });
   });

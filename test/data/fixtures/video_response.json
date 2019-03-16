@@ -1,0 +1,75 @@
+{
+    "kind": "youtube#videoListResponse",
+    "etag": "\"XI7nbFXulYBIpL0ayR_gDh3eu1k/NRSIWDzQYSe603t1wCIimF8X_ZM\"",
+    "pageInfo": {
+        "totalResults": 1,
+        "resultsPerPage": 1
+    },
+    "items": [
+        {
+            "kind": "youtube#video",
+            "etag": "\"XI7nbFXulYBIpL0ayR_gDh3eu1k/xVbV7Cb73j0t6eIIKg2srMxT8Ko\"",
+            "id": "L_bxFljD6AI",
+            "snippet": {
+                "publishedAt": "2018-12-19T18:00:04.000Z",
+                "channelId": "UCSIvrn68cUk8CS8MbtBmBkA",
+                "title": "Software Architecture Will Save Your Apps - MVP, MVC, MVVM, BLoC",
+                "description": "Spaghetti code. This is a nightmare of many software developers. There's nothing worse than code that is scattered everywhere without a structure. If you want to make a modification, you need to take a gazillion things into account. This way, you only ensure a slow and painful death of the whole project.\n\nThis painful style of coding also goes hand in hand with another villain of the software world - untestability. Testing code which is mixing your own logic with platform-specific code is a recipe for giving up on it completely, thus further dooming your app for premature death!\n\nGo to my website for more information, code examples and articles:\n● http://resocoder.com\n\nFollow me on social media:\n● https://instagram.com/resocoder\n● https://www.facebook.com/resocoder\n● https://twitter.com/resocoder\n● https://gab.ai/resocoder",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/L_bxFljD6AI/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/L_bxFljD6AI/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/L_bxFljD6AI/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    },
+                    "standard": {
+                        "url": "https://i.ytimg.com/vi/L_bxFljD6AI/sddefault.jpg",
+                        "width": 640,
+                        "height": 480
+                    },
+                    "maxres": {
+                        "url": "https://i.ytimg.com/vi/L_bxFljD6AI/maxresdefault.jpg",
+                        "width": 1280,
+                        "height": 720
+                    }
+                },
+                "channelTitle": "Reso Coder",
+                "tags": [
+                    "resocoder",
+                    "tutorial",
+                    "programming",
+                    "code",
+                    "programming tutorial",
+                    "app",
+                    "software",
+                    "architecture",
+                    "mvp",
+                    "mvvm",
+                    "mvc",
+                    "bloc",
+                    "flutter bloc",
+                    "android mvvm",
+                    "android mvp",
+                    "architecture pattern",
+                    "design pattern"
+                ],
+                "categoryId": "27",
+                "liveBroadcastContent": "none",
+                "localized": {
+                    "title": "Software Architecture Will Save Your Apps - MVP, MVC, MVVM, BLoC",
+                    "description": "Spaghetti code. This is a nightmare of many software developers. There's nothing worse than code that is scattered everywhere without a structure. If you want to make a modification, you need to take a gazillion things into account. This way, you only ensure a slow and painful death of the whole project.\n\nThis painful style of coding also goes hand in hand with another villain of the software world - untestability. Testing code which is mixing your own logic with platform-specific code is a recipe for giving up on it completely, thus further dooming your app for premature death!\n\nGo to my website for more information, code examples and articles:\n● http://resocoder.com\n\nFollow me on social media:\n● https://instagram.com/resocoder\n● https://www.facebook.com/resocoder\n● https://twitter.com/resocoder\n● https://gab.ai/resocoder"
+                },
+                "defaultAudioLanguage": "en"
+            }
+        }
+    ]
+}
